@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast-track Video Content Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            color: #202124;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100vh;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            padding: 32px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .output-section {
+            padding: 32px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #202124;
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            font-size: 14px;
+            font-family: 'Google Sans', sans-serif;
+            transition: all 0.2s;
+            background: #ffffff;
+            color: #202124;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .form-group input[type="text"] {
+            background-image: none;
+            padding-right: 16px;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #5f6368;
+        }
+
+        .form-group select[multiple] {
+            border-radius: 16px;
+            padding: 8px;
+            background-image: none;
+            padding-right: 8px;
+        }
+
+        .form-group select[multiple] option {
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .form-group select[multiple] option:checked {
+            background: #f1f3f4;
+            color: #202124;
+        }
+
+        .output-box {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            padding: 32px;
+            font-family: 'Google Sans', sans-serif;
+            font-size: 16px;
+            line-height: 2;
+            color: #202124;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px 24px;
+            background: #202124;
+            color: #ffffff;
+            border: none;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Google Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #3c4043;
+        }
+
+        .copy-btn:active {
+            background: #5f6368;
+        }
+
+        .copy-btn.copied {
+            background: #188038;
+        }
+
+        .input-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .input-section::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+
+        .input-section::-webkit-scrollbar-thumb {
+            background: #dadce0;
+            border-radius: 4px;
+        }
+
+        .input-section::-webkit-scrollbar-thumb:hover {
+            background: #bdc1c6;
+        }
+
+        @media (max-width: 1280px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+
+            .input-section, .output-section {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <div class="form-group">
+                <label for="topic">Topic</label>
+                <input type="text" id="topic" placeholder="Enter your topic here...">
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <input type="text" id="duration" list="durationOptions" placeholder="e.g., 1m, 3m, 8m, 15m, or custom">
+                <datalist id="durationOptions">
+                    <option value="1m">1m - TikTok/Shorts/Reels</option>
+                    <option value="3m">3m - YouTube Standard</option>
+                    <option value="8m">8m - Video Essay/Mini-Doc</option>
+                    <option value="15m">15m - Full Documentary</option>
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language</label>
+                <select id="language">
+                    <option value="EN">EN - English</option>
+                    <option value="ID">ID - Indonesian</option>
+                    <option value="Custom">Custom (type below)</option>
+                </select>
+                <input type="text" id="languageCustom" placeholder="Enter custom language..." style="margin-top: 8px; display: none;">
+            </div>
+
+            <div class="form-group">
+                <label for="visualBase">Visual Base</label>
+                <select id="visualBase">
+                    <optgroup label="Photorealistic & Cinematic">
+                        <option value="CINEMATIC">CINEMATIC - Hollywood Style</option>
+                        <option value="REALISM">REALISM - Documentary/Nat Geo</option>
+                        <option value="DARK">DARK/NOIR - High Contrast</option>
+                        <option value="VIBRANT">VIBRANT - Commercial/Travel</option>
+                        <option value="DOCUMENTARY">DOCUMENTARY - Vice Style</option>
+                    </optgroup>
+                    <optgroup label="Stylized & Artistic">
+                        <option value="ANIME">ANIME/GHIBLI - Japanese Animation</option>
+                        <option value="3D RENDER">3D RENDER - Pixar Style</option>
+                        <option value="ILLUSTRATIVE">ILLUSTRATIVE - Comic Book</option>
+                        <option value="WES ANDERSON">WES ANDERSON - Symmetrical</option>
+                        <option value="CYBERPUNK">CYBERPUNK - Neon Future</option>
+                    </optgroup>
+                    <optgroup label="Retro & Lo-Fi">
+                        <option value="VHS">VHS - 90s Retro</option>
+                        <option value="VINTAGE">1950s VINTAGE - B&W/Sepia</option>
+                        <option value="POLAROID">POLAROID - Film Photography</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="voiceBase">Voice Base (Multiple selection - Hold Ctrl/Cmd)</label>
+                <select id="voiceBase" multiple size="5" style="height: auto; min-height: 120px;">
+                    <option value="MRBEAST">MRBEAST - Hype & Energetic</option>
+                    <option value="NAS_DAILY">NAS DAILY - Short & Positive</option>
+                    <option value="PHILANTHROPY">PHILANTHROPY - Emotional</option>
+                    <option value="DOCUMENTARY">DOCUMENTARY - Serious/Journalistic</option>
+                    <option value="EDUCATIONAL">EDUCATIONAL - Clear Teacher</option>
+                    <option value="THRILLER">THRILLER - Tense & Suspenseful</option>
+                    <option value="POETIC">POETIC - Deep & Metaphorical</option>
+                    <option value="CORPORATE">CORPORATE - Professional</option>
+                    <option value="CASUAL">CASUAL/VLOG - Conversational</option>
+                </select>
+                <input type="text" id="voiceBaseCustom" placeholder="Or type custom voice style..." style="margin-top: 8px;">
+            </div>
+
+            <div class="form-group">
+                <label for="toneFlavor">Tone Flavor</label>
+                <select id="toneFlavor">
+                    <option value="Classic">Classic - Standard & Professional</option>
+                    <option value="GenZ">GenZ - Internet Slang</option>
+                    <option value="Emotional">Emotional - Heartfelt</option>
+                    <option value="Humor">Humor - Funny & Light</option>
+                    <option value="Dramatic">Dramatic - Theatrical</option>
+                    <option value="Dark">Dark - Cynical/Dark Humor</option>
+                    <option value="Serious">Serious - No-nonsense</option>
+                    <option value="Comic">Comic - Cartoon-like</option>
+                    <option value="Sarcastic">Sarcastic - Witty</option>
+                    <option value="Aggressive">Aggressive - Confrontational</option>
+                    <option value="Wholesome">Wholesome - Family Friendly</option>
+                    <option value="Melancholic">Melancholic - Sad & Reflective</option>
+                    <option value="Urgent">Urgent - Breaking News</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="storyFormula">Story Formula</label>
+                <select id="storyFormula">
+                    <option value="WOW–HOW–NOW">WOW–HOW–NOW - Viral Hook</option>
+                    <option value="Before–After–Why">Before–After–Why - Transformation</option>
+                    <option value="Problem–Action–Result">Problem–Action–Result - Classic</option>
+                    <option value="Challenge–Journey–Reward">Challenge–Journey–Reward - Adventure</option>
+                    <option value="Myth–Fact–Lesson">Myth–Fact–Lesson - Educational</option>
+                    <option value="Data–Story–Emotion">Data–Story–Emotion - Documentary</option>
+                    <option value="COUNTDOWN–REVEAL">COUNTDOWN–REVEAL - List Style</option>
+                    <option value="Top-X Curiosity Loop">Top-X Curiosity Loop - Sequential</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="retention">Retention Strategy (Optional)</label>
+                <select id="retention">
+                    <option value="">-- None --</option>
+                    <option value="CF-5 (Click Feedback 5s)">CF-5 - Click Feedback 5s</option>
+                    <option value="Curiosity Loop">Curiosity Loop - Keep Mystery</option>
+                    <option value="Pattern Interrupt">Pattern Interrupt - Visual Changes</option>
+                    <option value="Sequential Reveal">Sequential Reveal - Layer by Layer</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="emotionalArc">Emotional Arc (Optional)</label>
+                <select id="emotionalArc">
+                    <option value="">-- None --</option>
+                    <option value="3-ACT">3-ACT - Setup/Conflict/Resolution</option>
+                    <option value="HEARTBEAT">HEARTBEAT - Fast/Slow/Fast</option>
+                    <option value="TRANSFORMATION">TRANSFORMATION - Character Change</option>
+                    <option value="INSIGHT">INSIGHT - Aha Moment</option>
+                    <option value="TRAGEDY">TRAGEDY - Rise & Fall</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="output-box" id="output">TOPIC: <Enter your topic>
+DURATION: 1m
+LANGUAGE: EN
+VISUAL STYLE: CINEMATIC
+VOICE BASE: DOCUMENTARY
+TONE FLAVOR: Classic
+STORY FORMULA: WOW–HOW–NOW</div>
+
+            <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">
+                Copy to clipboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const inputs = {
+            topic: document.getElementById('topic'),
+            duration: document.getElementById('duration'),
+            language: document.getElementById('language'),
+            languageCustom: document.getElementById('languageCustom'),
+            visualBase: document.getElementById('visualBase'),
+            voiceBase: document.getElementById('voiceBase'),
+            voiceBaseCustom: document.getElementById('voiceBaseCustom'),
+            toneFlavor: document.getElementById('toneFlavor'),
+            storyFormula: document.getElementById('storyFormula'),
+            retention: document.getElementById('retention'),
+            emotionalArc: document.getElementById('emotionalArc')
+        };
+
+        const output = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
+
+        inputs.language.addEventListener('change', function() {
+            if (this.value === 'Custom') {
+                inputs.languageCustom.style.display = 'block';
+            } else {
+                inputs.languageCustom.style.display = 'none';
+            }
+            updateOutput();
+        });
+
+        function updateOutput() {
+            const topic = inputs.topic.value.trim() || '<Enter your topic>';
+            const duration = inputs.duration.value.trim() || '1m';
+            
+            let language;
+            if (inputs.language.value === 'Custom') {
+                language = inputs.languageCustom.value.trim() || 'Custom';
+            } else {
+                language = inputs.language.value;
+            }
+
+            const visualBase = inputs.visualBase.value;
+            
+            let voiceBase = [];
+            const selectedOptions = Array.from(inputs.voiceBase.selectedOptions).map(opt => opt.value);
+            if (selectedOptions.length > 0) {
+                voiceBase = voiceBase.concat(selectedOptions);
+            }
+            const customVoice = inputs.voiceBaseCustom.value.trim();
+            if (customVoice) {
+                voiceBase.push(customVoice);
+            }
+            const voiceBaseStr = voiceBase.length > 0 ? voiceBase.join(' + ') : 'DOCUMENTARY';
+
+            const toneFlavor = inputs.toneFlavor.value;
+            const storyFormula = inputs.storyFormula.value;
+            const retention = inputs.retention.value;
+            const emotionalArc = inputs.emotionalArc.value;
+
+            let outputText = `TOPIC: ${topic}
+DURATION: ${duration}
+LANGUAGE: ${language}
+VISUAL STYLE: ${visualBase}
+VOICE BASE: ${voiceBaseStr}
+TONE FLAVOR: ${toneFlavor}
+STORY FORMULA: ${storyFormula}`;
+
+            if (retention) {
+                outputText += `\nRETENTION STRATEGY: ${retention}`;
+            }
+            
+            if (emotionalArc) {
+                outputText += `\nEMOTIONAL ARC: ${emotionalArc}`;
+            }
+
+            output.textContent = outputText;
+        }
+
+        function copyToClipboard() {
+            const text = output.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                copyBtn.textContent = '✓ Copied';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy to clipboard';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy. Please try again.');
+            });
+        }
+
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updateOutput);
+            input.addEventListener('change', updateOutput);
+        });
+
+        updateOutput();
+    </script>
+</body>
+</html>
