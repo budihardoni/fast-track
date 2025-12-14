@@ -3,293 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Video Content Generator</title>
+    <title>Pro Content Strategist & Prompt Gen v17.0 (Strict Numbering)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1a73e8;
             --border-color: #dadce0;
-            --text-color: #202124;
             --bg-color: #f8f9fa;
-            --resizer-bg: #e0e0e0;
-            --resizer-hover: #1a73e8;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --text-color: #202124;
+            --radius-input: 12px;
+            --radius-container: 16px;
+            --radius-btn: 50px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Google Sans', sans-serif;
-            background: #ffffff;
             height: 100vh;
             color: var(--text-color);
-            overflow: hidden; /* Prevent body scroll, handle inside panels */
-        }
-
-        /* FLEX CONTAINER (Gantikan Grid) */
-        .container {
-            display: flex;
-            flex-direction: row; /* Default: Side by Side */
-            height: 100vh;
-            width: 100%;
             overflow: hidden;
+            background: #fff;
         }
 
-        /* --- LEFT SECTION (INPUTS) --- */
+        .container { display: flex; height: 100vh; width: 100%; }
+
+        /* --- LEFT: INPUT SECTION --- */
         .input-section {
-            width: 450px; /* Default width */
-            min-width: 300px; /* Batas minimum */
-            max-width: 70%; /* Batas maksimum */
+            width: 480px;
+            min-width: 350px;
             padding: 32px;
             overflow-y: auto;
             background: #fff;
-            height: 100%;
-        }
-
-        /* --- RESIZER HANDLE --- */
-        .resizer {
-            background-color: var(--bg-color);
-            border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
-            cursor: col-resize; /* Cursor geser kiri-kanan */
-            width: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .resizer {
+            width: 8px;
+            cursor: col-resize;
+            background: #f1f3f4;
             transition: background 0.2s;
-            z-index: 10;
+            border-left: 1px solid #ebebeb;
         }
+        .resizer:hover { background: var(--primary-color); }
 
-        .resizer:hover, .resizer.resizing {
-            background-color: var(--resizer-bg);
-            border-color: var(--resizer-hover);
-        }
-
-        /* Grip Icon Visual */
-        .resizer::after {
-            content: "||";
-            color: #9aa0a6;
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            pointer-events: none; /* Agar klik tembus ke div */
-        }
-
-        /* --- RIGHT SECTION (OUTPUT) --- */
+        /* --- RIGHT: OUTPUT SECTION --- */
         .output-section {
-            flex: 1; /* Mengisi sisa ruang */
-            min-width: 300px;
-            padding: 40px;
+            flex: 1;
+            padding: 32px;
             background: var(--bg-color);
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            height: 100%;
+            overflow: hidden;
         }
 
-        /* --- TYPOGRAPHY & FORM STYLES --- */
-        h2 { 
-            margin-bottom: 24px; 
-            font-size: 20px; 
-            color: var(--primary-color); 
-            font-weight: 700;
-        }
-
-        .section-title {
-            margin: 30px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e8eaed;
-            font-size: 13px;
-            font-weight: 700;
-            color: #5f6368;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-        }
-
-        .form-group { margin-bottom: 22px; }
+        /* TYPOGRAPHY */
+        h2 { color: var(--text-color); font-size: 18px; margin-bottom: 20px; font-weight: 700; }
         
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 4px;
-            font-size: 14px;
-            color: #202124;
+        .section-title { 
+            font-size: 11px; font-weight: 800; color: #5f6368; 
+            text-transform: uppercase; border-bottom: 2px solid #e8eaed; 
+            padding-bottom: 5px; margin: 30px 0 15px; letter-spacing: 0.5px; 
         }
-
-        .helper-text {
-            display: block;
-            font-size: 12px;
-            color: #5f6368;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .optional-badge {
-            background: #e8f0fe;
-            color: #1967d2;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            vertical-align: middle;
-            margin-left: 6px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px 12px;
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 8px; color: #202124; }
+        .helper { font-size: 11px; color: #666; margin-bottom: 6px; display: block; line-height: 1.4; }
+        
+        /* --- INPUT STYLING --- */
+        input[type="text"], select, textarea {
+            width: 100%; padding: 12px 16px; 
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: 'Google Sans', sans-serif;
-            transition: border 0.2s, box-shadow 0.2s;
+            border-radius: var(--radius-input);
+            font-family: inherit; font-size: 13px;
             background: #fff;
             color: #3c4043;
+            transition: border 0.2s, box-shadow 0.2s;
         }
 
-        input[type="text"]:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
         }
 
-        select[multiple] {
-            height: auto;
-            min-height: 140px;
-            padding: 5px;
-            background-image: none;
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23202124%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px top 50%;
+            background-size: 10px auto;
+        }
+
+        input:focus, select:focus, textarea:focus { 
+            outline: none; 
+            border-color: var(--primary-color); 
+            box-shadow: 0 0 0 4px rgba(26,115,232,0.1); 
         }
         
-        select[multiple] option {
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 2px;
-            cursor: pointer;
-            line-height: 1.4;
+        select[multiple] { 
+            height: 220px; padding: 8px; 
+            background-image: none; 
         }
-        
-        select[multiple] option:checked {
-            background-color: #e8f0fe;
-            color: #1967d2;
-            font-weight: 500;
-        }
+        select[multiple] option { padding: 10px; border-radius: 8px; margin-bottom: 2px; line-height: 1.4; }
+        select[multiple] option:checked { background-color: #e8f0fe; color: #1967d2; font-weight: 700; }
 
-        .custom-input {
-            margin-top: 8px;
-            display: none;
-            background: #fdfdfd;
-            border-left: 3px solid var(--primary-color) !important;
+        .custom-input { 
+            margin-top: 10px; 
+            display: block; 
+            background: #fff;
+            border-left: 1px solid var(--border-color) !important; 
         }
+        .custom-input:focus { border-color: var(--primary-color) !important; }
 
-        .output-paper {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            min-height: 600px; /* Kertas output panjang */
-        }
-
-        .output-content {
-            font-family: 'Google Sans', sans-serif;
-            font-size: 15px;
-            line-height: 1.8;
-            color: #202124;
-        }
-
-        .output-row {
-            margin-bottom: 18px;
+        /* FILE UPLOAD STYLING */
+        .file-wrapper {
             display: flex;
-            align-items: baseline;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
         }
-
-        .output-label {
-            font-weight: 700;
-            min-width: 180px;
-            color: #000;
-            display: inline-block;
-        }
-
-        .output-value {
-            color: #3c4043;
+        input[type="file"] {
+            font-size: 12px;
+            padding: 8px;
+            background: #f8f9fa;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-input);
             flex: 1;
         }
-
-        .copy-btn {
-            align-self: flex-start;
-            padding: 12px 24px;
-            background: #202124;
-            color: #ffffff;
+        .clear-btn {
+            background: transparent;
             border: none;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 500;
+            color: #202124; 
+            font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.1s;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            transition: 0.2s;
+        }
+        .clear-btn:hover { color: #d93025; }
+        .clear-btn.visible { display: flex; }
+
+        /* VIEW TOGGLE */
+        .view-toggle { 
+            display: flex; background: #e8eaed; padding: 4px; 
+            border-radius: var(--radius-btn);
+            margin-bottom: 15px; width: fit-content; margin-left: auto; 
+        }
+        .view-btn { 
+            padding: 8px 20px; border: none; background: transparent; 
+            font-size: 12px; font-weight: 700; cursor: pointer; 
+            border-radius: var(--radius-btn); color: #5f6368; transition: 0.2s;
+        }
+        .view-btn.active { background: #fff; color: var(--text-color); box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+
+        /* OUTPUT BOX */
+        .output-box {
+            flex: 1;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-container);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
         }
 
-        .copy-btn:hover { background: #3c4043; }
-        .copy-btn:active { transform: scale(0.98); }
-        .copy-btn.copied { background: #188038; }
+        .brief-content { 
+            padding: 30px; 
+            line-height: 1.4; 
+            font-size: 14px; 
+            overflow-y: auto; 
+            height: 100%;
+        }
+        
+        /* --- STYLING OUTPUT --- */
+        .brief-item { 
+            display: flex; 
+            border-bottom: 1px solid #f1f3f4; 
+            padding: 12px 0; 
+            align-items: flex-start; 
+            justify-content: flex-start;
+        }
+        
+        .brief-key { 
+            font-weight: 700; 
+            width: 160px; 
+            color: #444; 
+            flex-shrink: 0; 
+            padding-right: 10px;
+            margin: 0;
+            line-height: 1.5; 
+        }
+        
+        .brief-val { 
+            color: #202124; 
+            font-weight: 500; 
+            flex: 1; 
+            text-align: left !important; 
+            white-space: pre-wrap; 
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* DETAIL DIBAWAH FORMULA */
+        .detail-block {
+            display: block;
+            margin-top: 4px; /* Tambah jarak sedikit agar jelas ini anak dari atasnya */
+            padding-left: 0;
+            border: none;
+            color: #5f6368;
+            font-size: 13px;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            text-align: left !important;
+        }
 
-        /* --- RESPONSIVE / MOBILE STYLE --- */
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column; /* Stack Atas-Bawah */
-            }
+        .prompt-content {
+            background: var(--code-bg); color: var(--code-text);
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            padding: 25px; white-space: pre-wrap; line-height: 1.5;
+            height: 100%; overflow-y: auto; display: none;
+        }
 
-            .input-section {
-                width: 100%;
-                max-width: 100%;
-                height: 50%; /* Default mobile height */
-                min-height: 200px;
-                max-height: 80%;
-                border-right: none;
-            }
+        /* ACTION BAR */
+        .action-bar { 
+            margin-top: 15px; 
+            display: flex; 
+            justify-content: flex-start; 
+        }
+        .btn { 
+            padding: 12px 28px; border: none; 
+            border-radius: var(--radius-btn);
+            font-weight: 600; cursor: pointer; font-size: 13px; 
+            display: flex; align-items: center; gap: 8px; transition: 0.2s; 
+        }
+        .btn-primary { background: #202124; color: #fff; } 
+        .btn-primary:hover { background: #3c4043; transform: translateY(-1px); }
+        .btn.copied { background: #1a73e8 !important; color: #fff; }
 
-            .resizer {
-                width: 100%;
-                height: 12px; /* Lebih tebal di HP biar gampang disentuh */
-                cursor: row-resize; /* Cursor geser atas-bawah */
-                border-left: none;
-                border-right: none;
-                border-top: 1px solid var(--border-color);
-                border-bottom: 1px solid var(--border-color);
-            }
-            
-            .resizer::after {
-                content: "="; /* Ubah icon jadi horizontal grip */
-                transform: rotate(90deg);
-                font-size: 14px;
-            }
-
-            .output-section {
-                width: 100%;
-                height: auto;
-                min-height: 200px;
-            }
+        @media (max-width: 800px) {
+            .container { flex-direction: column; }
+            .input-section, .output-section { width: 100%; height: 50%; }
+            .resizer { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <!-- INPUT SECTION -->
+    <div class="container">
+        <!-- LEFT INPUT -->
         <div class="input-section" id="leftPane">
-            <h2>✏️</h2>
+            <h2>✏️ Input</h2>
 
-            <!-- 1. TOPIC -->
+            <!-- A. CORE -->
+            <div class="section-title" style="margin-top:0">A. Context & Format</div>
+            
             <div class="form-group">
                 <label>1. Topic</label>
-                <span class="helper-text">Format: [Subject] + [Unique Angle] (e.g., "Morning routine" → "The biological weapon hidden in 5 AM")</span>
-                <input type="text" id="topic" placeholder="Enter topic...">
+                <textarea id="topic" placeholder="e.g. 'Freelancing' -> 'Why 9-5 is actually safer'&#10;(Tekan Enter untuk baris baru)" style="min-height: 60px;"></textarea>
             </div>
 
-            <!-- 2. DURASI -->
             <div class="form-group">
-                <label>2. Durasi</label>
+                <label>2. Duration</label>
                 <select id="duration">
                     <option value="15s">15s (Micro Hook)</option>
                     <option value="30s">30s (Micro Hook)</option>
@@ -302,12 +284,37 @@
                     <option value="15m+">15m+ (Documentary)</option>
                     <option value="Custom">Custom Duration...</option>
                 </select>
-                <input type="text" id="durationCustom" class="custom-input" placeholder="Masukkan durasi (cth: 45 detik)">
+                <input type="text" id="durationCustom" class="custom-input" style="display:none" placeholder="Isi durasi manual...">
             </div>
 
-            <!-- 3. BAHASA -->
             <div class="form-group">
-                <label>3. Bahasa</label>
+                <label>3. Content Format / Media</label>
+                <span class="helper">Pilih "Belum kepikiran" jika ingin AI yang menentukan.</span>
+                <select id="format">
+                    <option value="Undecided">⚠️ Belum kepikiran (Skip Output)</option>
+                    <optgroup label="Video Formats">
+                        <option value="Talking Head Video">Talking Head (Influencer/Face-cam)</option>
+                        <option value="Faceless Stock Footage">Faceless + Stock Footage</option>
+                        <option value="Cinematic Video">Cinematic (B-Roll + Voiceover)</option>
+                        <option value="Kinetic Typography">Kinetic Typography (Text Only)</option>
+                        <option value="Animation">Animation / Motion Graphics</option>
+                        <option value="Mixed Media">Mixed (Face + Overlay)</option>
+                        <option value="Screen Recording">Screen Recording / Tutorial</option>
+                    </optgroup>
+                    <optgroup label="Audio Only">
+                        <option value="Audio Only / Podcast">Audio Only / Podcast (Spotify)</option>
+                        <option value="Meditation Guide">Meditation / Sleep Guide</option>
+                    </optgroup>
+                    <optgroup label="Others">
+                        <option value="Script Only">Script Only (General)</option>
+                        <option value="Custom">Custom Format...</option>
+                    </optgroup>
+                </select>
+                <input type="text" id="formatCustom" class="custom-input" style="display:none" placeholder="e.g. Carousel Text, Thread...">
+            </div>
+
+            <div class="form-group">
+                <label>4. Language</label>
                 <select id="language">
                     <option value="Indonesian">Indonesian</option>
                     <option value="English">English</option>
@@ -315,27 +322,26 @@
                 </select>
             </div>
 
-            <!-- 4. TARGET AUDIENCE -->
             <div class="form-group">
-                <label>4. Target Audience</label>
-                <span class="helper-text">Psychographic, not demographic (e.g., "People stuck despite working hard")</span>
+                <label>5. Target Audience</label>
                 <select id="audiencePreset">
                     <option value="">-- Pilih Preset atau Ketik Manual --</option>
                     <option value="Orang yang merasa stuck meski sudah kerja keras">Orang stuck meski kerja keras</option>
                     <option value="Pemula yang ingin hasil cepat tanpa modal besar">Pemula ingin hasil instan</option>
-                    <option value="Mahasiswa/Pelajar yang minim budget">Mahasiswa/Pelajar budget minim</option>
-                    <option value="Profesional sibuk yang tidak punya waktu luang">Profesional sibuk (No time)</option>
+                    <option value="Gen Z / Internet Native">Gen Z / Youth (Santai/Gaul)</option>
+                    <option value="General Public / Household / Lifestyle">General Public (Ibu-ibu/Hobi/Umum)</option>
+                    <option value="Professionals / Business Owners">Professionals (Formal/Serious)</option>
                     <option value="Skeptics who doubt mainstream advice">Skeptis terhadap saran umum</option>
-                    <option value="Tech-savvy Gen Z audience">Gen Z (Tech-savvy)</option>
-                    <option value="Parents worrying about their kids' future">Orang tua yang khawatir masa depan anak</option>
                     <option value="Custom">Lainnya (Ketik Manual)...</option>
                 </select>
-                <input type="text" id="audienceCustom" placeholder="Deskripsikan psikografis audience..." style="margin-top: 8px;">
+                <input type="text" id="audienceCustom" class="custom-input" placeholder="Deskripsi spesifik audience...">
             </div>
 
-            <!-- 5. VOICE BASE -->
+            <!-- B. VOICE & TONE -->
+            <div class="section-title">B. Voice & Style</div>
+
             <div class="form-group">
-                <label>5. Voice Base <span style="font-weight:400; font-size:11px; color:#1a73e8">(Tahan Ctrl/Cmd untuk pilih > 1)</span></label>
+                <label>6. Voice Base (Speaker) <span style="font-weight:400; font-size:11px; color:#1a73e8">(Multi-select: Hold Ctrl/Cmd)</span></label>
                 <select id="voiceBase" multiple>
                     <option value="HYPE">HYPE - High Energy</option>
                     <option value="SNAPPY">SNAPPY - Fast Paced</option>
@@ -351,16 +357,21 @@
                     <option value="SPIRITUAL">SPIRITUAL - Calm & Zen</option>
                     <option value="LORE">LORE - Storyteller</option>
                     <option value="STREET">STREET - Raw & Urban</option>
+                    <option value="ANCHOR">ANCHOR - News Authority</option>
+                    <option value="HERO">HERO - Epic Motivational</option>
+                    <option value="BUSINESS">BUSINESS - Data Driven</option>
+                    <option value="MASCOT">MASCOT - Playful Character</option>
+                    <option value="SCI-FI">SCI-FI - Futuristic Tech</option>
                 </select>
-                <input type="text" id="voiceCustom" placeholder="+ Tambahkan gaya suara custom..." style="margin-top: 8px;">
+                <input type="text" id="voiceCustom" class="custom-input" placeholder="+ Tambahkan gaya suara custom (opsional)...">
             </div>
 
-            <!-- 6. TONE FLAVOR -->
             <div class="form-group">
-                <label>6. Tone Flavor <span style="font-weight:400; font-size:11px; color:#1a73e8">(Tahan Ctrl/Cmd untuk pilih > 1)</span></label>
-                <select id="toneFlavor" multiple style="min-height: 300px;">
+                <label>7. Tone Flavor (Emotion) <span style="font-weight:400; font-size:11px; color:#1a73e8">(Multi-select: Hold Ctrl/Cmd)</span></label>
+                <select id="toneFlavor" multiple>
                     <option value="Classic">Classic: Standar, formal, jelas, profesional</option>
                     <option value="GenZ">GenZ: Slang internet (No cap, Slay, Bet)</option>
+                    <option value="Conversational">Conversational: Natural (Aku/Kamu)</option>
                     <option value="Emotional">Emotional: Penuh perasaan & menyentuh hati</option>
                     <option value="Humor">Humor: Santai, lucu, memancing tawa</option>
                     <option value="Dramatic">Dramatic: Teatral, berlebihan, penuh aksi</option>
@@ -381,11 +392,14 @@
                     <option value="Bold-Corporate">Bold-Corporate: Percaya diri bisnis</option>
                     <option value="Philosophical">Philosophical: Berpikir mendalam</option>
                 </select>
+                <input type="text" id="toneCustom" class="custom-input" placeholder="+ Tambahkan tone custom (opsional)...">
             </div>
 
-            <!-- 7. STORY FORMULA -->
+            <!-- C. STRATEGY -->
+            <div class="section-title">C. Strategy & Formula</div>
+
             <div class="form-group">
-                <label>7. Story Formula</label>
+                <label>8. Story Formula</label>
                 <select id="storyFormula">
                     <optgroup label="Standard & Viral">
                         <option value="WOW–HOW–NOW">WOW–HOW–NOW (Viral hook)</option>
@@ -397,33 +411,41 @@
                     </optgroup>
                     
                     <optgroup label="Narrative & Emotional">
-                        <option value="RANT / OPINION">RANT / OPINION (Raw Opinion → Reason → Ask)</option>
-                        <option value="Twist–Reveal–Reflect">Twist–Reveal–Reflect (Surprise Ending)</option>
-                        <option value="Fact–Emotion–Hope">Fact–Emotion–Hope (Non-Profit/Charity)</option>
-                        <option value="Vision–Obstacle–Breakthrough">Vision–Obstacle–Breakthrough (Founder Story)</option>
-                        <option value="Fear–Avoid–Achieve">Fear–Avoid–Achieve (Problem Solving)</option>
-                        <option value="Contrast–Pain–Change">Contrast–Pain–Change (Visual Impact)</option>
-                        <option value="OneName–OneIdea–OneChange">OneName–OneIdea–OneChange (Biography/Profile)</option>
+                        <option value="RANT / OPINION">RANT / OPINION (Raw Opinion)</option>
+                        <option value="Twist–Reveal–Reflect">Twist–Reveal–Reflect (Surprise)</option>
+                        <option value="Fact–Emotion–Hope">Fact–Emotion–Hope (Non-Profit)</option>
+                        <option value="Vision–Obstacle–Breakthrough">Vision–Obstacle–Breakthrough (Founder)</option>
+                        <option value="Fear–Avoid–Achieve">Fear–Avoid–Achieve (Solving)</option>
+                        <option value="Contrast–Pain–Change">Contrast–Pain–Change (Visual)</option>
+                        <option value="OneName–OneIdea–OneChange">OneName–OneIdea–OneChange (Profile)</option>
                     </optgroup>
 
                     <optgroup label="Deep & Mystery">
-                        <option value="Mystery–Clue–Truth">Mystery–Clue–Truth (Detective Style)</option>
-                        <option value="Question–Chase–Answer">Question–Chase–Answer (Curiosity Journey)</option>
-                        <option value="Chaos–Order–Purpose">Chaos–Order–Purpose (Philosophy/History)</option>
-                        <option value="Pattern–Break–Impact">Pattern–Break–Impact (Analysis/Review)</option>
-                        <option value="TinyDetail–BigTruth–Curiosity">TinyDetail–BigTruth–Curiosity (Video Essay)</option>
-                        <option value="HiddenOrigin–ModernImpact–HumanMeaning">HiddenOrigin–Impact–Meaning (History/Lore)</option>
+                        <option value="Mystery–Clue–Truth">Mystery–Clue–Truth (Detective)</option>
+                        <option value="Question–Chase–Answer">Question–Chase–Answer (Journey)</option>
+                        <option value="Chaos–Order–Purpose">Chaos–Order–Purpose (Philosophy)</option>
+                        <option value="Pattern–Break–Impact">Pattern–Break–Impact (Analysis)</option>
+                        <option value="TinyDetail–BigTruth–Curiosity">TinyDetail–BigTruth–Curiosity (Essay)</option>
+                        <option value="HiddenOrigin–ModernImpact–HumanMeaning">HiddenOrigin–Impact–Meaning (Lore)</option>
                     </optgroup>
                 </select>
+                
+                <!-- PLACEHOLDER SESUAI REQUEST -->
+                <textarea id="formulaDetail" class="custom-input" style="display:block; margin-top:10px; border-left:1px solid var(--border-color) !important; min-height:80px;" placeholder="+ Add detail (Opsional)"></textarea>
             </div>
 
-            <!-- OPTIONAL PARAMETERS HEADER -->
-            <div class="section-title">OPTIONAL PARAMETERS</div>
-
-            <!-- 8. EMOTIONAL ARC -->
             <div class="form-group">
-                <label>8. Emotional Arc <span class="optional-badge">Optional</span></label>
-                <span class="helper-text">Leave on AUTO to derive from Story Formula</span>
+                <label>9. Call to Action (CTA)</label>
+                <span class="helper">Kosongkan jika tidak ingin ada CTA di output (urutan akan naik).</span>
+                <input type="text" id="cta" placeholder="e.g. 'Subscribe for Part 2', 'Link in Bio'...">
+            </div>
+
+            <!-- D. ADVANCED LOGIC -->
+            <div class="section-title">D. Advanced (Smart Logic)</div>
+            
+            <div class="form-group">
+                <label>10. Emotional Arc</label>
+                <span class="helper">Leave on AUTO to derive from Formula.</span>
                 <select id="emotionalArc">
                     <option value="AUTO" selected>⚡ AUTO (Based on Formula)</option>
                     <option value="3-ACT">3-ACT (Setup-Conflict-Resolution)</option>
@@ -442,10 +464,9 @@
                 </select>
             </div>
 
-            <!-- 9. RETENTION -->
             <div class="form-group">
-                <label>9. Retention Strategy <span class="optional-badge">Optional</span></label>
-                <span class="helper-text">Leave on AUTO to derive from Duration/Formula</span>
+                <label>11. Retention Strategy</label>
+                <span class="helper">Leave on AUTO to derive from Duration/Formula.</span>
                 <select id="retention">
                     <option value="AUTO" selected>⚡ AUTO (Smart Selection)</option>
                     <option value="Click-Feedback Structure">Click-Feedback (5s validation)</option>
@@ -461,98 +482,128 @@
                     <option value="Emotional Payoff Cascade">Emotional Payoff Cascade</option>
                 </select>
             </div>
+
+            <!-- E. BRAND & ASSETS (AGENCY MODULE) -->
+            <div class="section-title">E. Brand & Assets (Ad Agency)</div>
+
+            <div class="form-group">
+                <label>12. Client/Brand Name</label>
+                <input type="text" id="brandName" placeholder="e.g. 'Nike Indonesia', 'Gojek'...">
+            </div>
+
+            <div class="form-group">
+                <label>13. Industry Category</label>
+                <select id="industry">
+                    <option value="">-- Select Industry --</option>
+                    <option value="FMCG">FMCG (Food, Beverage, Consumer Goods)</option>
+                    <option value="Tech">Technology & Electronics</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Fashion">Fashion & Beauty</option>
+                    <option value="Finance">Finance & Banking</option>
+                    <option value="Pharma">Pharmaceutical & Healthcare</option>
+                    <option value="Real Estate">Real Estate & Property</option>
+                    <option value="E-commerce">E-commerce & Retail</option>
+                    <option value="Telco">Telecommunications</option>
+                    <option value="Custom">Custom / Lainnya...</option>
+                </select>
+                <input type="text" id="industryCustom" class="custom-input" style="display:none" placeholder="Isi kategori industri...">
+            </div>
+
+            <div class="form-group">
+                <label>14. Product Name & Description</label>
+                <input type="text" id="productName" placeholder="Product name...">
+                <textarea id="productDesc" placeholder="Key features, USP, price positioning..." style="margin-top:8px; min-height:60px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>15. Asset Upload (Optional)</label>
+                <span class="helper">Upload produk/talent photos. AI will simulate asset intelligence.</span>
+                
+                <div style="margin-top:10px">
+                    <label style="font-size:12px; font-weight:500">Product Photo:</label>
+                    <div class="file-wrapper">
+                        <input type="file" id="productPhoto" accept="image/*">
+                        <button type="button" id="clearProduct" class="clear-btn" title="Hapus foto">✕</button>
+                    </div>
+                    <span class="helper" style="margin-top:4px">If provided, AI will be instructed to match its lighting & style.</span>
+                </div>
+                
+                <div style="margin-top:10px">
+                    <label style="font-size:12px; font-weight:500">Talent/Model Photo:</label>
+                    <div class="file-wrapper">
+                        <input type="file" id="talentPhoto" accept="image/*">
+                        <button type="button" id="clearTalent" class="clear-btn" title="Hapus foto">✕</button>
+                    </div>
+                    <span class="helper" style="margin-top:4px">If provided, AI will extract visual characteristics.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>16. Brand Mandatories</label>
+                <textarea id="mandatories" placeholder="e.g.&#10;- Logo placement: Bottom right, last 5s&#10;- Legal copy: '*T&C apply'&#10;- Color palette: Red #FF0000, White #FFFFFF" style="min-height:80px"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>17. Content Policy Mode</label>
+                <select id="policyMode">
+                    <option value="" selected>-- Select Policy (Optional) --</option>
+                    <option value="SAFE">Safe - AI Generation Ready (No celebrity likeness)</option>
+                    <option value="FLEXIBLE">Flexible - Flagged but Allowed (Client approval needed)</option>
+                    <option value="UNRESTRICTED">Unrestricted - Full Creative Freedom (Human production)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>18. Campaign Template (Speed Boost)</label>
+                <span class="helper">Auto-fill formula based on campaign type.</span>
+                <select id="campaignTemplate">
+                    <option value="NONE">None (Build from scratch)</option>
+                    <option value="PRODUCT_LAUNCH">Product Launch (New Market Entry)</option>
+                    <option value="TESTIMONIAL">Testimonial (Social Proof & Trust)</option>
+                    <option value="DEMO">Product Demo (Feature Showcase)</option>
+                    <option value="BRAND_STORY">Brand Story (Mission & Values)</option>
+                    <option value="SOCIAL_IMPACT">Social Impact (Community & CSR)</option>
+                    <option value="COMPARISON">Comparison (Market Superiority)</option>
+                    <option value="Custom">Custom Campaign...</option>
+                </select>
+                <input type="text" id="campaignCustom" class="custom-input" style="display:none" placeholder="Isi nama campaign...">
+            </div>
+
         </div>
 
-        <!-- RESIZER HANDLE -->
+        <!-- RESIZER -->
         <div class="resizer" id="resizer"></div>
 
-        <!-- OUTPUT SECTION -->
-        <div class="output-section" id="rightPane">
-            <div class="output-paper" id="outputContent">
-                <!-- Content injected via JS -->
+        <!-- RIGHT OUTPUT -->
+        <div class="output-section">
+            <div class="view-toggle">
+                <button class="view-btn active" onclick="switchView('brief')">Preview</button>
+                <button class="view-btn" onclick="switchView('prompt')">Full Prompt</button>
             </div>
-            
-            <button class="copy-btn" id="copyBtn" onclick="copyToClipboard()">
-                Copy Output
-            </button>
+
+            <div class="output-box">
+                <!-- BRIEF VIEW -->
+                <div id="briefView" class="brief-content"></div>
+                <!-- PROMPT VIEW -->
+                <div id="promptView" class="prompt-content"></div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" id="smartCopyBtn" onclick="smartCopy()">
+                    <span>Copy</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- DRAG RESIZE LOGIC ---
-        const resizer = document.getElementById('resizer');
-        const leftPane = document.getElementById('leftPane');
-        const container = document.getElementById('container');
-        
-        let x = 0;
-        let y = 0;
-        let leftWidth = 0;
-        let leftHeight = 0;
-
-        const mouseDownHandler = function(e) {
-            // Get current mouse position
-            x = e.clientX;
-            y = e.clientY;
-            
-            // Calculate current dimension of leftPane
-            const rect = leftPane.getBoundingClientRect();
-            leftWidth = rect.width;
-            leftHeight = rect.height;
-
-            resizer.classList.add('resizing');
-
-            // Attach listeners to document
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseup', mouseUpHandler);
-        };
-
-        const mouseMoveHandler = function(e) {
-            // Check current window width to determine direction
-            const isMobile = window.innerWidth <= 900;
-
-            if (!isMobile) {
-                // Desktop: Horizontal Resize
-                const dx = e.clientX - x;
-                const newWidth = leftWidth + dx;
-                
-                // Prevent panel from getting too small or too big
-                if (newWidth > 300 && newWidth < window.innerWidth * 0.7) {
-                    leftPane.style.width = `${newWidth}px`;
-                    leftPane.style.flex = `0 0 ${newWidth}px`; // Force flex basis
-                }
-            } else {
-                // Mobile: Vertical Resize
-                const dy = e.clientY - y;
-                const newHeight = leftHeight + dy;
-
-                if (newHeight > 200 && newHeight < window.innerHeight * 0.8) {
-                    leftPane.style.height = `${newHeight}px`;
-                    leftPane.style.flex = 'none'; // Disable flex grow/shrink for custom height
-                }
-            }
-        };
-
-        const mouseUpHandler = function() {
-            resizer.classList.remove('resizing');
-            document.removeEventListener('mousemove', mouseMoveHandler);
-            document.removeEventListener('mouseup', mouseUpHandler);
-        };
-
-        // Attach event listener to resizer
-        resizer.addEventListener('mousedown', mouseDownHandler);
-        // End Drag Logic
-
-
         // --- SMART LOGIC MAPS ---
         const arcDefaults = {
-            // Original
             'WOW–HOW–NOW': 'INSIGHT',
             'Before–After–Why': 'TRANSFORMATION',
             'Problem–Action–Result': '3-ACT',
             'Myth–Fact–Lesson': 'INSIGHT',
             'Top-X Curiosity Loop': 'CURIOSITY LOOP',
-            
-            // New & Updated
             'RANT / OPINION': 'COURAGE',
             'Twist–Reveal–Reflect': 'MYSTERY ARC',
             'Question–Chase–Answer': 'CURIOSITY LOOP',
@@ -569,11 +620,36 @@
             'HiddenOrigin–ModernImpact–HumanMeaning': 'LEGACY'
         };
 
+        const campaignMap = {
+            'PRODUCT_LAUNCH': 'Hook–Proof–Promise',
+            'TESTIMONIAL': 'Problem–Action–Result',
+            'DEMO': 'Before–After–Why',
+            'BRAND_STORY': 'Vision–Obstacle–Breakthrough',
+            'SOCIAL_IMPACT': 'Fact–Emotion–Hope',
+            'COMPARISON': 'Contrast–Pain–Change'
+        };
+
+        const campaignDisplayMap = {
+            'NONE': '',
+            'PRODUCT_LAUNCH': 'Product Launch',
+            'TESTIMONIAL': 'Testimonial',
+            'DEMO': 'Product Demo',
+            'BRAND_STORY': 'Brand Story',
+            'SOCIAL_IMPACT': 'Social Impact',
+            'COMPARISON': 'Comparison'
+        };
+
+        const policyDisplayMap = {
+            'SAFE': 'Safe - AI Generation Ready (No celebrity likeness)',
+            'FLEXIBLE': 'Flexible - Flagged but Allowed (Client approval needed)',
+            'UNRESTRICTED': 'Unrestricted - Full Creative Freedom (Human production)'
+        };
+
         function getAutoRetention(durationVal, formulaVal) {
             if (formulaVal === 'RANT / OPINION') return 'Hard CTA Minimal Outro';
-            if (formulaVal.includes('Mystery') || formulaVal.includes('Twist') || formulaVal.includes('TinyDetail')) return 'Curiosity Cliffhanger';
-            if (formulaVal.includes('Myth') || formulaVal.includes('Proof') || formulaVal.includes('Vision')) return 'Reward Forecasting';
-            if (formulaVal.includes('Fact–Emotion') || formulaVal.includes('OneName')) return 'Emotional Payoff Cascade';
+            if (formulaVal.includes('Mystery') || formulaVal.includes('Twist')) return 'Curiosity Cliffhanger';
+            if (formulaVal.includes('Myth') || formulaVal.includes('Proof')) return 'Reward Forecasting';
+            if (formulaVal.includes('Fact–Emotion')) return 'Emotional Payoff Cascade';
             
             if (['15s', '30s'].includes(durationVal)) return 'Click-Feedback + Pattern Interrupt';
             if (['1m', '90s'].includes(durationVal)) return 'Curiosity Loop + Sequential Reveal';
@@ -583,70 +659,97 @@
             return 'Curiosity Loop';
         }
 
-        // --- DOM Elements ---
+        // --- UI LOGIC ---
+        let currentView = 'brief';
+
         const inputs = {
             topic: document.getElementById('topic'),
-            duration: document.getElementById('duration'),
-            durationCustom: document.getElementById('durationCustom'),
+            duration: document.getElementById('duration'), durationCustom: document.getElementById('durationCustom'),
+            format: document.getElementById('format'), formatCustom: document.getElementById('formatCustom'),
             language: document.getElementById('language'),
-            audiencePreset: document.getElementById('audiencePreset'),
-            audienceCustom: document.getElementById('audienceCustom'),
-            voiceBase: document.getElementById('voiceBase'),
-            voiceCustom: document.getElementById('voiceCustom'),
-            toneFlavor: document.getElementById('toneFlavor'),
+            audiencePreset: document.getElementById('audiencePreset'), audienceCustom: document.getElementById('audienceCustom'),
+            voiceBase: document.getElementById('voiceBase'), voiceCustom: document.getElementById('voiceCustom'),
+            toneFlavor: document.getElementById('toneFlavor'), toneCustom: document.getElementById('toneCustom'),
             storyFormula: document.getElementById('storyFormula'),
+            formulaDetail: document.getElementById('formulaDetail'),
+            cta: document.getElementById('cta'),
             emotionalArc: document.getElementById('emotionalArc'),
-            retention: document.getElementById('retention')
+            retention: document.getElementById('retention'),
+            // AGENCY INPUTS
+            brandName: document.getElementById('brandName'),
+            industry: document.getElementById('industry'), industryCustom: document.getElementById('industryCustom'),
+            productName: document.getElementById('productName'),
+            productDesc: document.getElementById('productDesc'),
+            productPhoto: document.getElementById('productPhoto'),
+            talentPhoto: document.getElementById('talentPhoto'),
+            mandatories: document.getElementById('mandatories'),
+            policyMode: document.getElementById('policyMode'),
+            campaignTemplate: document.getElementById('campaignTemplate'), campaignCustom: document.getElementById('campaignCustom')
         };
-        const outputDiv = document.getElementById('outputContent');
-        const copyBtn = document.getElementById('copyBtn');
 
-        // --- EVENT LISTENERS ---
-        inputs.duration.addEventListener('change', () => {
-            if (inputs.duration.value === 'Custom') {
-                inputs.durationCustom.style.display = 'block';
-                inputs.durationCustom.focus();
-            } else {
-                inputs.durationCustom.style.display = 'none';
-            }
-            generateOutput();
-        });
+        // BUTTONS FOR FILE CLEAR
+        const btnClearProduct = document.getElementById('clearProduct');
+        const btnClearTalent = document.getElementById('clearTalent');
 
-        inputs.audiencePreset.addEventListener('change', () => {
-            const val = inputs.audiencePreset.value;
-            if (val && val !== 'Custom') {
-                inputs.audienceCustom.value = val;
-            } else if (val === 'Custom') {
-                inputs.audienceCustom.value = '';
-                inputs.audienceCustom.focus();
-            }
-            generateOutput();
-        });
-
-        Object.values(inputs).forEach(el => {
-            el.addEventListener('input', generateOutput);
-            el.addEventListener('change', generateOutput);
-        });
-
-        // --- HELPER FUNCTIONS ---
-        function getMultiSelectValues(selectElement, customInputElement = null) {
-            let selected = Array.from(selectElement.selectedOptions).map(opt => opt.value);
-            if (customInputElement && customInputElement.value.trim() !== '') {
-                selected.push(customInputElement.value.trim());
-            }
-            if (selected.length === 0) return '-';
-            return selected.join(' + ');
+        function toggleCustomInput(selectId, customId) {
+            const sel = document.getElementById(selectId);
+            const cust = document.getElementById(customId);
+            cust.style.display = sel.value === 'Custom' ? 'block' : 'none';
         }
 
-        function generateOutput() {
-            const topic = inputs.topic.value.trim() || '...';
-            let durasi = inputs.duration.value;
-            if (durasi === 'Custom') durasi = inputs.durationCustom.value.trim() || 'Custom';
-            const bahasa = inputs.language.value;
-            const audience = inputs.audienceCustom.value.trim() || '...';
-            const voice = getMultiSelectValues(inputs.voiceBase, inputs.voiceCustom);
-            const tone = getMultiSelectValues(inputs.toneFlavor);
+        inputs.campaignTemplate.addEventListener('change', function() {
+            const selected = this.value;
+            if (campaignMap[selected]) {
+                inputs.storyFormula.value = campaignMap[selected];
+                render();
+            }
+            toggleCustomInput('campaignTemplate', 'campaignCustom');
+        });
+
+        inputs.industry.addEventListener('change', function() {
+            toggleCustomInput('industry', 'industryCustom');
+        });
+
+        // --- FILE UPLOAD LOGIC ---
+        function handleFileSelect(inputId, btnId) {
+            const input = document.getElementById(inputId);
+            const btn = document.getElementById(btnId);
+            if(input.files.length > 0) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+            render();
+        }
+
+        function clearFile(inputId, btnId) {
+            const input = document.getElementById(inputId);
+            const btn = document.getElementById(btnId);
+            input.value = ''; 
+            btn.classList.remove('visible'); 
+            render();
+        }
+
+        inputs.productPhoto.addEventListener('change', () => handleFileSelect('productPhoto', 'clearProduct'));
+        inputs.talentPhoto.addEventListener('change', () => handleFileSelect('talentPhoto', 'clearTalent'));
+        
+        btnClearProduct.addEventListener('click', () => clearFile('productPhoto', 'clearProduct'));
+        btnClearTalent.addEventListener('click', () => clearFile('talentPhoto', 'clearTalent'));
+
+
+        function getData() {
+            const getMulti = (sel, cust) => {
+                let val = Array.from(sel.selectedOptions).map(o => o.value);
+                if (cust.value) val.push(cust.value);
+                return val.join(' + ');
+            };
+            const getSingle = (sel, cust) => {
+                return sel.value === 'Custom' ? cust.value : sel.value;
+            };
+
+            const durasi = getSingle(inputs.duration, inputs.durationCustom);
             const formula = inputs.storyFormula.value;
+            const formulaDet = inputs.formulaDetail.value;
 
             let arc = inputs.emotionalArc.value;
             if (arc === 'AUTO') {
@@ -660,80 +763,322 @@
                 retention = `${derived} (Auto-Selected)`;
             }
 
-            const htmlContent = `
-                <div class="output-content">
-                    <div class="output-row">
-                        <span class="output-label">1. Topic:</span>
-                        <span class="output-value">${topic}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">2. Durasi:</span>
-                        <span class="output-value">${durasi}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">3. Bahasa:</span>
-                        <span class="output-value">${bahasa}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">4. Target Audience:</span>
-                        <span class="output-value">${audience}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">5. Voice Base:</span>
-                        <span class="output-value">${voice}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">6. Tone Flavor:</span>
-                        <span class="output-value">${tone}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">7. Story Formula:</span>
-                        <span class="output-value">${formula}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">8. Emotional Arc:</span>
-                        <span class="output-value">${arc}</span>
-                    </div>
-                    <div class="output-row">
-                        <span class="output-label">9. Retention:</span>
-                        <span class="output-value">${retention}</span>
-                    </div>
-                </div>
-            `;
-            outputDiv.innerHTML = htmlContent;
+            let aud = inputs.audienceCustom.value || inputs.audiencePreset.value || 'General Audience';
+            let voiceVal = getMulti(inputs.voiceBase, inputs.voiceCustom);
+            if (!voiceVal || voiceVal === '') voiceVal = 'Default';
+
+            const hasProduct = inputs.productPhoto.files.length > 0;
+            const hasTalent = inputs.talentPhoto.files.length > 0;
+
+            let rawCamp = inputs.campaignTemplate.value;
+            let finalCamp = "";
+            if (rawCamp === 'Custom') {
+                finalCamp = inputs.campaignCustom.value;
+            } else if (rawCamp !== 'NONE') {
+                finalCamp = campaignDisplayMap[rawCamp] || rawCamp; 
+            }
+
+            let rawPolicy = inputs.policyMode.value;
+            let finalPolicy = "";
+            if (rawPolicy && rawPolicy !== "") {
+                finalPolicy = policyDisplayMap[rawPolicy] || rawPolicy;
+            }
+
+            return {
+                topic: inputs.topic.value || '[No Topic]',
+                durasi: durasi,
+                format: getSingle(inputs.format, inputs.formatCustom),
+                lang: inputs.language.value,
+                audience: aud,
+                voice: voiceVal,
+                tone: getMulti(inputs.toneFlavor, inputs.toneCustom) || 'Default',
+                formula: formula,
+                formulaDetail: formulaDet,
+                cta: inputs.cta.value.trim(), 
+                arc: arc,
+                retention: retention,
+                brandName: inputs.brandName.value || '',
+                industry: getSingle(inputs.industry, inputs.industryCustom) || '',
+                productName: inputs.productName.value || '',
+                productDesc: inputs.productDesc.value || '',
+                hasProduct: hasProduct,
+                hasTalent: hasTalent,
+                mandatories: inputs.mandatories.value || '',
+                policyMode: finalPolicy,
+                campaignTemplate: finalCamp
+            };
         }
 
-        function copyToClipboard() {
-            let durasi = inputs.duration.value;
-            if (durasi === 'Custom') durasi = inputs.durationCustom.value;
-            const formula = inputs.storyFormula.value;
-            let arc = inputs.emotionalArc.value;
-            if (arc === 'AUTO') arc = (arcDefaults[formula] || '3-ACT') + ' (Auto-Derived)';
-            let retention = inputs.retention.value;
-            if (retention === 'AUTO') retention = getAutoRetention(durasi, formula) + ' (Auto-Selected)';
+        // --- RENDER FUNCTION ---
+        let currentValidItems = [];
 
-            const plainText = `1. Topic: ${inputs.topic.value.trim()}
-2. Durasi: ${durasi}
-3. Bahasa: ${inputs.language.value}
-4. Target Audience: ${inputs.audienceCustom.value}
-5. Voice Base: ${getMultiSelectValues(inputs.voiceBase, inputs.voiceCustom)}
-6. Tone Flavor: ${getMultiSelectValues(inputs.toneFlavor)}
-7. Story Formula: ${formula}
-8. Emotional Arc: ${arc}
-9. Retention: ${retention}`;
+        function render() {
+            const data = getData();
+            
+            // Core Items
+            let briefItems = [
+                { label: 'Topic', val: data.topic },
+                { label: 'Duration', val: data.durasi },
+                { label: 'Format', val: data.format },
+                { label: 'Language', val: data.lang },
+                { label: 'Audience', val: data.audience },
+                { label: 'Voice', val: data.voice },
+                { label: 'Tone', val: data.tone },
+                { label: 'Formula', val: data.formula, detail: data.formulaDetail }, 
+                { label: 'CTA', val: data.cta },
+                { label: 'Arc', val: data.arc },
+                { label: 'Retention', val: data.retention }
+            ];
 
-            navigator.clipboard.writeText(plainText).then(() => {
-                copyBtn.textContent = '✓ Copied';
-                copyBtn.classList.add('copied');
+            // Agency Items
+            let brandVal = data.brandName;
+            if (data.industry) brandVal += ` (${data.industry})`;
+            
+            // --- STRICT ASSET LOGIC ---
+            let assetVal = "";
+            if (data.hasProduct || data.hasTalent) {
+                const prodStr = data.hasProduct ? "Product: Uploaded (Simulate Intelligence)" : "Product: No";
+                const talentStr = data.hasTalent ? "Talent: Uploaded (Extract Characteristics)" : "Talent: No";
+                assetVal = `${prodStr}, ${talentStr}`;
+            } 
+            
+            briefItems.push(
+                { label: '---', val: '---' }, // Separator
+                { label: 'Brand', val: brandVal.trim() },
+                { label: 'Campaign', val: data.campaignTemplate },
+                { label: 'Product', val: data.productName },
+                { label: 'Details', val: data.productDesc },
+                { label: 'Mandatories', val: data.mandatories },
+                { label: 'Assets', val: assetVal }
+            );
+
+            if (data.policyMode && data.policyMode !== "") {
+                briefItems.push({ label: 'Policy', val: data.policyMode });
+            }
+
+            // Filter
+            currentValidItems = briefItems.filter(item => {
+                if (item.label === 'Topic') return true; 
+                if (item.label === '---') return true; 
+                if (!item.val || item.val === '' || item.val === '-') return false;
+                if (item.label === 'Format' && item.val === 'Undecided') return false;
+                return true;
+            });
+
+            // Remove sep if last
+            const sepIndex = currentValidItems.findIndex(i => i.label === '---');
+            if (sepIndex === currentValidItems.length - 1) {
+                currentValidItems.pop();
+            }
+
+            // --- STRICT NUMBERING LOGIC ---
+            const briefHTML = currentValidItems.map((item, index) => {
+                if (item.label === '---') {
+                    return `<div style="border-bottom: 2px dashed #e0e0e0; margin: 15px 0;"></div>`;
+                }
+
+                let detailHtml = '';
+                if (item.label === 'Formula' && item.detail) {
+                    detailHtml = `<div class="detail-block">${item.detail}</div>`;
+                }
+                
+                // Kunci: Hanya nomori item sebelum separator '---'
+                let displayIndex = '';
+                if (sepIndex === -1 || index < sepIndex) {
+                    // Ini bagian Top (Core), pakai nomor 1-11
+                    displayIndex = (index + 1) + '. ';
+                } else {
+                    // Ini bagian Bawah (Agency), tidak pakai nomor/bullet
+                    displayIndex = ''; 
+                }
+
+                return `<div class="brief-item"><div class="brief-key">${displayIndex}${item.label}</div><div class="brief-val">${item.val}${detailHtml}</div></div>`;
+            }).join('');
+            
+            document.getElementById('briefView').innerHTML = briefHTML;
+
+
+            // Full Prompt
+            let visualInstruction = "";
+            if (data.format === 'Undecided') {
+                visualInstruction = `*FORMAT NOTE:* User has NOT decided the format yet. Please suggest the best video format based on the Topic.`;
+            } else if (data.format.toLowerCase().includes("audio") || data.format.toLowerCase().includes("podcast")) {
+                visualInstruction = `*FORMAT NOTE:* AUDIO-ONLY format (${data.format}). Do NOT write visual descriptions. Focus on Sound Design (SFX) & Ambience.`;
+            } else if (data.format.toLowerCase().includes("script only")) {
+                visualInstruction = `*FORMAT NOTE:* Text script only. No visual/audio cues needed.`;
+            } else {
+                visualInstruction = `*FORMAT NOTE:* VIDEO format (${data.format}). Provide visual descriptions suitable for this style.`;
+            }
+
+            let agencyContext = "";
+            if (data.brandName || data.productName || data.mandatories) {
+                agencyContext = `
+## 🏢 BRAND & AGENCY DATA
+- **Brand/Client:** ${data.brandName || '-'}
+- **Industry:** ${data.industry || '-'}
+- **Campaign Type:** ${data.campaignTemplate || '-'}
+- **Product:** ${data.productName || '-'}
+- **Description/USP:** ${data.productDesc || '-'}
+- **Mandatories:** ${data.mandatories || '-'}
+- **Assets Status:**
+  - Product Photo: ${data.hasProduct ? 'Uploaded' : 'None'}
+  - Talent Photo: ${data.hasTalent ? 'Uploaded' : 'None'}
+`;
+            }
+
+            let assetInstruction = "";
+            if (data.hasProduct) {
+                assetInstruction += `*ASSET NOTE:* User uploaded a Product Photo. Please derive visual characteristics (lighting, materials, colors) from the context provided or assume high-end studio photography matching the industry standard.\n`;
+            }
+            if (data.hasTalent) {
+                assetInstruction += `*TALENT NOTE:* User uploaded a Talent Photo. AI should extract character features (age, style, vibe) to describe the protagonist accurately.\n`;
+            }
+
+            let policyInstruction = "";
+            if (data.policyMode && data.policyMode !== "") {
+                policyInstruction = `
+### F. CONTENT POLICY
+**COMMAND:** Adhere to the selected Content Policy Mode: **[${data.policyMode}]**
+`;
+            }
+
+            let ctaInstruction = data.cta 
+                ? `Ensure the script builds up to this CTA: "${data.cta}"` 
+                : `No specific CTA provided. End the script naturally.`;
+
+            const contextList = currentValidItems
+                .filter(i => i.label !== '---')
+                .map((item, index) => {
+                    let valStr = item.val;
+                    if (item.label === 'Formula' && item.detail) {
+                        valStr += `\n   ${item.detail.split('\n').join('\n   ')}`;
+                    }
+                    return `${item.label.toUpperCase()}: ${valStr}`;
+                }).join('\n');
+
+            const masterPrompt = `
+# 📝 SCRIPT GENERATOR
+
+## CONTEXT
+${contextList}
+${agencyContext}
+
+---
+
+## EXECUTION INSTRUCTIONS
+
+### A. FORMAT & VISUAL LOGIC
+${visualInstruction}
+${assetInstruction}
+
+### B. WORD COUNT & PACING
+Calculate target word count based on [Duration] and [Voice]:
+- High Energy: ~3 words/sec
+- Conversational: ~2.5 words/sec
+- Slow/Deep: ~1.8 words/sec
+*Constraint:* Must fit the duration.
+
+### C. LANGUAGE & REGISTER (Indonesian Logic)
+**IF LANGUAGE = INDONESIAN:**
+1. **Localization:** Don't translate slang literally. Use local equivalents (e.g. "Jujurly", "Valid").
+2. **Particles:** Use (Lah/Dong/Sih/Kok) naturally.
+3. **Register Hierarchy:**
+   - Gen Z/Youth = Slang/Lo-Gue/Mixed.
+   - General Public = Conversational (Aku/Kamu/Kita).
+   - Professional = Baku/Standard.
+   *Override:* Even if Voice is "News", if Audience is "Gen Z", use Gen Z vocabulary with News delivery.
+
+### D. ENDING LOGIC
+${ctaInstruction}
+${policyInstruction}
+
+### E. OUTPUT
+Produce the final script with tags [EMOTION, SPEED] for TTS/Voiceover.
+`.trim();
+
+            document.getElementById('promptView').textContent = masterPrompt;
+        }
+
+        function switchView(mode) {
+            currentView = mode;
+            document.getElementById('briefView').style.display = mode === 'brief' ? 'block' : 'none';
+            document.getElementById('promptView').style.display = mode === 'prompt' ? 'block' : 'none';
+            
+            const btn = document.getElementById('smartCopyBtn');
+            const btns = document.querySelectorAll('.view-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            
+            if (mode === 'brief') {
+                btns[0].classList.add('active');
+                btn.innerHTML = '<span>Copy</span>';
+            } else {
+                btns[1].classList.add('active');
+                btn.innerHTML = '<span>Copy Prompt</span>';
+            }
+        }
+
+        function smartCopy() {
+            let textToCopy = "";
+            if (currentView === 'brief') {
+                const sepIndex = currentValidItems.findIndex(i => i.label === '---');
+                
+                textToCopy = currentValidItems.map((item, index) => {
+                    if (item.label === '---') return "-------------------------";
+                    let valStr = item.val;
+                    if (item.label === 'Formula' && item.detail) {
+                        valStr += `\n${item.detail}`;
+                    }
+                    
+                    let displayIndex = '';
+                    if (sepIndex === -1 || index < sepIndex) {
+                        displayIndex = (index + 1) + '. ';
+                    }
+                    
+                    return `${displayIndex}${item.label}: ${valStr}`;
+                }).join('\n');
+            } else {
+                textToCopy = document.getElementById('promptView').textContent;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('smartCopyBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<span>Copied</span>';
+                btn.classList.add('copied');
                 setTimeout(() => {
-                    copyBtn.textContent = 'Copy Output';
-                    copyBtn.classList.remove('copied');
-                }, 2000);
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                }, 1500);
             });
         }
 
-        // Initialize
-        generateOutput();
+        ['duration', 'format'].forEach(id => {
+            document.getElementById(id).addEventListener('change', () => toggleCustomInput(id, id+'Custom'));
+        });
+
+        Object.values(inputs).forEach(el => {
+            if(el) {
+                el.addEventListener('input', render);
+                el.addEventListener('change', render);
+            }
+        });
+
+        const resizer = document.getElementById('resizer');
+        const leftPane = document.getElementById('leftPane');
+        let x = 0; let w = 0;
+        resizer.addEventListener('mousedown', e => {
+            x = e.clientX; w = leftPane.getBoundingClientRect().width;
+            document.addEventListener('mousemove', resizeMove);
+            document.addEventListener('mouseup', resizeUp);
+        });
+        function resizeMove(e) { 
+            const newW = w + e.clientX - x;
+            if (newW > 300 && newW < window.innerWidth * 0.8) leftPane.style.width = newW + 'px'; 
+        }
+        function resizeUp() { document.removeEventListener('mousemove', resizeMove); document.removeEventListener('mouseup', resizeUp); }
+
+        render();
+
     </script>
 </body>
 </html>
