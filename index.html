@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✏️ Input</title>
+    <title>📝 Brief</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -138,12 +138,12 @@
     <div class="container">
         <!-- LEFT INPUT -->
         <div class="input-section" id="leftPane">
-            <h2>✏️ Input</h2>
+            <h2>📝 Campaign Brief</h2>
 
             <div class="section-title" style="margin-top:0">A. Brand & Campaign Context</div>
             <div class="form-group">
                 <label>1. Brand Name</label>
-                <input type="text" id="brandName" placeholder="e.g. Samsung, Unilever, Pepsodent...">
+                <input type="text" id="brandName" placeholder="Contoh: Makaroni Ngehe, Erigo, atau Brand Kamu...">
             </div>
 
             <div class="form-group">
@@ -198,8 +198,8 @@
 
             <div class="form-group">
                 <label>3. Product Name</label>
-                <input type="text" id="productName" placeholder="Product name...">
-                <textarea id="productDesc" style="margin-top: 15px;" placeholder="Key features, USP, price..."></textarea>
+                <input type="text" id="productName" placeholder="e.g. Kopi Kenangan Mantan">
+                <textarea id="productDesc" style="margin-top: 15px;" placeholder="Apa keunggulannya? Apa bedanya dengan kompetitor? Berapa harganya?"></textarea>
             </div>
 
             <div class="form-group">
@@ -221,8 +221,8 @@
 
             <div class="section-title">B. Content Strategy</div>
             <div class="form-group">
-                <label>5. Topic + Unique Angle</label>
-                <textarea id="topic" placeholder="e.g. 'Why this is better than 9-5'"></textarea>
+                <label>5. Key Message / Angel Iklan</label>
+                <textarea id="topic" placeholder="Contoh: Kopi ini bikin melek tanpa bikin kembung (bukan sekadar 'Kopi enak')"></textarea>
             </div>
 
             <div class="form-group">
@@ -277,17 +277,28 @@
                 <input type="text" id="formatCustom" class="custom-input" style="display:none" placeholder="Type format manually...">
                 
                 <div class="option-group">
-                    <span class="option-label">Pilih Visual Style:</span>
-                    <label class="check-item"><input type="radio" name="visualStyle" value="Natural"> Natural</label>
-                    <label class="check-item"><input type="radio" name="visualStyle" value="Energetic"> Energetic</label>
-                    <label class="check-item"><input type="radio" name="visualStyle" value="Clean / Professional"> Clean / Professional</label>
+                    <span class="option-label">Gaya Visual (Vibe):</span>
+                    <label class="check-item"><input type="checkbox" name="visualMode" value="Literal"> NATURAL 
+                    (Dokumenter, Vlog, Keseharian, Apa adanya)</label>
+                    <label class="check-item"><input type="checkbox" name="visualMode" value="Exaggerated"> DRAMATIS (Visual "wah", iklan TV, Intens)</label>
+                    <label class="check-item"><input type="checkbox" name="visualMode" value="Absurd"> FANTASI (Imajinatif, Mustahil, Surealis, Efek magis)</label>
                 </div>
-                
+
+                <div class="option-group">
+                    <span class="option-label">Gaya Bicara (Voice):</span>
+                    <label class="check-item"><input type="checkbox" name="narrativeMode" value="Literal"> LUGAS & INFORMATIF
+                    (To-the-Point, Edukasi, Jelas, Serius)</label>
+                    <label class="check-item"><input type="checkbox" name="narrativeMode" value="Exaggerated"> SANTAI (Fun, Ringan, Bercanda, Bahasa teman)</label>
+                    <label class="check-item"><input type="checkbox" name="narrativeMode" value="Absurd"> NYELENEH / RANDOM 
+                    (Aneh, Mengejutkan, Twist, Unik)</label>
+                </div>
+
                 <div class="option-group">
                     <span class="option-label">Larangan visual (opsional):</span>
-                    <label class="check-item"><input type="checkbox" name="visualBan" value="Wajah terlalu cantik / model"> Wajah terlalu cantik / model</label>
-                    <label class="check-item"><input type="checkbox" name="visualBan" value="Terlalu sinematik"> Terlalu sinematik</label>
-                    <label class="check-item"><input type="checkbox" name="visualBan" value="Terlalu kartun"> Terlalu kartun</label>
+                    <label class="check-item"><input type="checkbox" name="visualBan" value="Wajah 'AI' / Terlalu Sempurna (Plastik)"> Wajah terlalu cantik / Model</label>
+                    <label class="check-item"><input type="checkbox" name="visualBan" value="Terlalu sinematik"> Terlalu Sinematik</label>
+                    <label class="check-item"><input type="checkbox" name="visualBan" value="Terlalu kartun"> Terlalu Kartun</label>
+                    <input type="text" id="visualBanCustom" placeholder="e.g. 'Jangan ada warna merah'">
                 </div>
             </div>
 
@@ -298,14 +309,18 @@
                     <option value="30s">30s (TikTok / Reels / Shorts)</option>
                     <option value="1m">1m (Standard Social Ad)</option>
                     <option value="90s">90s (In-depth Promo)</option>
-                    <option value="3m">3m (Brand Film / YouTube)</option>
+            <!--        <option value="3m">3m (Brand Film / YouTube)</option>
                     <option value="5m">5m (Product Deep Dive)</option>
                     <option value="8m">8m (YouTube Standard)</option>
                     <option value="10m">10m (Deep Narrative)</option>
-                    <option value="15m+">15m+ (Documentary Style)</option>
+                    <option value="15m+">15m+ (Documentary Style)</option>-->
                     <option value="Custom">Custom Duration...</option>
                 </select>
                 <input type="text" id="durationCustom" class="custom-input" style="display:none" placeholder="Isi durasi manual...">
+                <div class="option-group">
+                    <label class="check-item"><input type="radio" name="aspectRatio" value="Vertical"> Vertical (9:16)</label>
+                    <label class="check-item"><input type="radio" name="aspectRatio" value="Horizontal"> Horizontal (16:9)</label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -360,7 +375,7 @@
             </div>
 
             <div class="form-group">
-                <label>12. Brand Mandatories (Optional)</label>
+                <label>12. Brand Guidelines / Aturan Wajib (Optional)</label>
                 <textarea id="mandatories" placeholder="e.g. Logo kanan bawah, sebutkan tagline..."></textarea>
             </div>
 
@@ -401,19 +416,30 @@
             cta: document.getElementById('cta'), language: document.getElementById('language'),
             mandatories: document.getElementById('mandatories'),
             productPhoto: document.getElementById('productPhoto'),
-            talentPhoto: document.getElementById('talentPhoto')
+            talentPhoto: document.getElementById('talentPhoto'),
+            visualBanCustom: document.getElementById('visualBanCustom')
         };
 
         function getData() {
             const getS = (sel, cust) => (sel.value === 'Custom' && cust) ? (cust.value || '') : sel.value;
             
             // Radio: Visual Style
-            const vStyleEl = document.querySelector('input[name="visualStyle"]:checked');
+            const vStyleEl = document.querySelector('input[name="visualMode"]:checked');
             const vStyle = vStyleEl ? vStyleEl.value : '';
+
+            // Radio: Narrative Style
+            const nStyleEl = document.querySelector('input[name="narrativeMode"]:checked');
+            const nStyle = nStyleEl ? nStyleEl.value : '';
 
             // Checkbox: Visual Ban
             const vBanEls = document.querySelectorAll('input[name="visualBan"]:checked');
-            const vBan = Array.from(vBanEls).map(cb => cb.value).join(', ');
+            let vBanList = Array.from(vBanEls).map(cb => cb.value);
+            
+            // Add Custom Visual Ban if exists
+            if (inputs.visualBanCustom.value) {
+                vBanList.push(inputs.visualBanCustom.value);
+            }
+            const vBan = vBanList.join(', ');
 
             const brandVal = inputs.brandName.value || 'Brand';
             const audienceVal = getS(inputs.audiencePreset, inputs.audienceCustom) || 'General Audience';
@@ -421,16 +447,21 @@
 
             let rawDur = getS(inputs.duration, inputs.durationCustom);
             let ratio = '';
-            if(['15s', '30s', '1m', '90s'].includes(rawDur)) ratio = ' (9:16)';
-            else if(['3m', '5m', '8m', '10m', '15m+'].includes(rawDur)) ratio = ' (16:9)';
+            
+            const ratioEl = document.querySelector('input[name="aspectRatio"]:checked');
+            if (ratioEl && ratioEl.value === 'Vertical') ratio = ' (9:16)';
+            else if (ratioEl && ratioEl.value === 'Horizontal') ratio = ' (16:9)';
+
             const durationVal = rawDur + ratio;
 
-            let assetProd = inputs.productPhoto.files.length > 0 ? 'Uploaded' : 'No';
-            let assetTalent = inputs.talentPhoto.files.length > 0 ? 'Uploaded' : 'No';
+            let assetProd = inputs.productPhoto.files.length > 0 ? '[Prod1]' : 'No';
+            let assetTalent = inputs.talentPhoto.files.length > 0 ? '[C1]' : 'No';
 
             let formatVal = getS(inputs.format, inputs.formatCustom);
-            if (vStyle) formatVal += ` | Style: ${vStyle}`;
-            if (vBan) formatVal += ` | No: ${vBan}`;
+            
+            // Logic: Visual/Narrative styles NOT included in formatVal (so they don't show in Preview).
+            // Logic: Bans ARE included in formatVal.
+            //if (vBan) formatVal += ` | No: ${vBan} `;
 
             return {
                 brand: brandVal,
@@ -448,6 +479,7 @@
                 assetProd: assetProd,
                 assetTalent: assetTalent,
                 vStyle: vStyle,
+                vNar: nStyle,
                 vBan: vBan
             };
         }
@@ -464,8 +496,9 @@
                 inputs.topic.value !== '' || 
                 inputs.format.value !== 'Undecided' || 
                 d.vStyle !== '' ||
+                d.vNar !== '' ||
                 d.vBan !== '' ||
-                inputs.duration.value !== '1m' || 
+                inputs.duration.value !== '15s' || 
                 inputs.audiencePreset.value !== '' || 
                 inputs.cta.value !== '' || 
                 inputs.mandatories.value !== ''
@@ -474,7 +507,7 @@
             let html = '';
             if (!hasInput) {
                 // TAMPILAN AWAL
-                html += `<div class="brief-item"><div class="brief-key">1. Brand</div><div class="brief-val">Your Brand</div></div>`;
+                html += `<div class="brief-item"><div class="brief-key">1. Brand</div><div class="brief-val">e.g. Unilever, Bintang Toejoeh </div></div>`;
                 html += `<div class="brief-item"><div class="brief-key">2. Duration</div><div class="brief-val">15s (9:16)</div></div>`;
                 html += `<div class="brief-item"><div class="brief-key">3. Audience</div><div class="brief-val">General Audience</div></div>`;
                 html += `<div class="brief-item"><div class="brief-key">4. Language</div><div class="brief-val">Indonesian</div></div>`;
@@ -484,18 +517,19 @@
                     { label: 'Industry Category', val: d.industry },
                     { label: 'Product Name & USP', val: d.product, detail: d.details },
                     { label: 'Campaign Template', val: d.campaign },
-                    { label: 'Topic + Unique Angle', val: d.angle },
+                    { label: 'Key Message / Angel Iklan', val: d.angle },
                     { label: 'Content Format', val: d.format },
                     { label: 'Duration', val: d.duration },
                     { label: 'Target Audience', val: d.audience },
                     { label: 'Call to Action', val: d.cta },
                     { label: 'Language', val: d.lang },
                     { label: 'Asset Upload', val: `Product Photo: ${d.assetProd}, Talent Photo: ${d.assetTalent}` },
-                    { label: 'Brand Mandatories', val: d.mandatories }
+                    { label: 'Brand Guidelines', val: d.mandatories }
                 ];
 
                 const filtered = rawItems.filter(i => {
                     if(i.label === 'Brand Name' || i.label === 'Target Audience' || i.label === 'Language' || i.label === 'Duration') return true;
+                    if(i.label === 'Asset Upload' && i.val === 'Product Photo: No, Talent Photo: No') return false;
                     return i.val && i.val !== '' && i.val !== 'NONE' && i.val !== 'Undecided';
                 });
                 
@@ -512,7 +546,7 @@
                 { label: 'Product Name', val: d.product },
                 { label: 'USP', val: d.details },
                 { label: 'Campaign Template', val: d.campaign },
-                { label: 'Topic + Unique Angle', val: d.angle },
+                { label: 'Key Message / Angel Iklan', val: d.angle },
                 { label: 'Content Format', val: d.format },
                 { label: 'Duration', val: d.duration },
                 { label: 'Target Audience', val: d.audience },
@@ -523,9 +557,9 @@
             ].filter(i => i.val && i.val !== '' && i.val !== 'NONE' && i.val !== 'Undecided');
 
             const blueprint = `
-# TOPIC ENGINE
+# KEY MESSAGE ENGINE
 ROLE: Chief Strategy Officer (Deterministic).
-GOAL: Convert Client Input into a Rigid Strategy Blueprint.
+GOAL: Convert Client Input into a Rigid, Commercially-Executable Strategy Blueprint.
 INPUT SOURCE: Unified Input Form (Raw Data).
 
 ---
@@ -581,36 +615,35 @@ STEP 5: CALL TO ACTION (CTA) GENERATOR
 
 ---
 
-## OUTPUT FORMAT
+## OUTPUT FORMAT (BLUEPRINT)
 
 Output ONLY this Markdown Block.
 
 \`\`\`markdown
-1. Topic (Creative Position): [One-line commercial angle: "Core tension + product promise"]
-2. Duration: [DURATION]
+1. Key Message / Angle Iklan (Creative Position): [One-line commercial angle: "Core tension + product promise"]
+2. Duration: ${d.duration}
 3. Language: Indonesian
-4. Audience: General Audience (derived from Industry if not specified)
-5. Voice: [Auto-derived: e.g. HYPE / EDUCATIONAL]
-6. Tone: [Auto-derived: e.g. Energetic / Trustworthy]
+4. Audience: ${d.audience}
+5. Voice: [Auto-derived based on Industry & Format]
+6. Tone: [Auto-derived based on Visual Style: ${d.vStyle || 'Default'}]
 7. Formula: [MAPPED_FORMULA]
 8. Arc: [MAPPED_ARC]
 9. Retention: [MAPPED_RETENTION]
-10. Call to Action (CTA): [GENERATED_CTA]
+10. Call to Action (CTA): ${d.cta || '[GENERATED_CTA]'}
 -------------------------
-Brand: [BRAND_NAME]
-Campaign: [CAMPAIGN_TEMPLATE OR 'General']
-Product: [PRODUCT_NAME]
-Details: [USP_TEXT]
-Mandatories: Logo at end, Safe area compliance.
-Assets: Product: [Uploaded/No], Talent: [Uploaded/No]
-Domain: [MAPPED_DOMAIN]
-Intent: [COMMERCIAL / BRANDING]
-Policy: [POLICY_MODE]
-Format: [FORMAT_INPUT]
+Brand: ${d.brand}
+Campaign: ${d.campaign || 'General'}
+Product: ${d.product}
+USP: ${d.details}
+Mandatories: ${d.mandatories || 'Logo at end, Safe area compliance.'}
+Assets: Product: ${d.assetProd}, Talent: ${d.assetTalent}
+Visual Style: ${d.vStyle || 'Any'}
+Negative: ${d.vBan || 'None'}
+Format: ${d.format}
 -------------------------
 Expression:
-Narrative Mode: [Straight / Playful / Absurd]
-Visual Mode: [Literal / Exaggerated / Absurd]
+Narrative Mode: ${d.vNar}
+Visual Mode: ${d.vStyle}
 \`\`\`
 `.trim();
             document.getElementById('promptView').textContent = blueprint;
@@ -627,8 +660,9 @@ Visual Mode: [Literal / Exaggerated / Absurd]
                 inputs.topic.value !== '' || 
                 inputs.format.value !== 'Undecided' || 
                 d.vStyle !== '' ||
+                d.vNar !== '' ||
                 d.vBan !== '' ||
-                inputs.duration.value !== '1m' || 
+                inputs.duration.value !== '15s' || 
                 inputs.audiencePreset.value !== '' || 
                 inputs.cta.value !== '' || 
                 inputs.mandatories.value !== ''
@@ -647,7 +681,7 @@ Visual Mode: [Literal / Exaggerated / Absurd]
                         { label: 'Product Name:', val: d.product },
                         { label: 'USP:', val: d.details },
                         { label: 'Campaign Template:', val: d.campaign },
-                        { label: 'Topic + Unique Angle:', val: d.angle },
+                        { label: 'Key Message / Angel Iklan:', val: d.angle },
                         { label: 'Content Format:', val: d.format },
                         { label: 'Duration:', val: d.duration },
                         { label: 'Target Audience:', val: d.audience },
@@ -658,6 +692,7 @@ Visual Mode: [Literal / Exaggerated / Absurd]
                     ];
                     const filtered = rawItems.filter(i => {
                         if(i.label === 'Brand Name' || i.label === 'Target Audience' || i.label === 'Language' || i.label === 'Duration') return true;
+                        if(i.label === 'Asset Upload:' && i.val === 'Product: No, Talent: No') return false;
                         return i.val && i.val !== '' && i.val !== 'NONE' && i.val !== 'Undecided';
                     });
                     textToCopy = filtered.map((i, idx) => `${idx + 1}. ${i.label} ${i.val}`).join('\n');
@@ -707,7 +742,18 @@ Visual Mode: [Literal / Exaggerated / Absurd]
 
         // Listeners for Radio/Checkboxes
         document.addEventListener('change', function(e) {
-            if(e.target.name === 'visualStyle' || e.target.name === 'visualBan') {
+            // Logic Checkbox rasa Radio (Mutual Exclusion)
+            if(e.target.name === 'visualMode' || e.target.name === 'narrativeMode') {
+                if(e.target.checked) {
+                    const group = document.querySelectorAll(`input[name="${e.target.name}"]`);
+                    group.forEach(el => {
+                        if(el !== e.target) el.checked = false;
+                    });
+                }
+                render();
+            }
+            // Existing logic
+            else if(e.target.name === 'visualBan' || e.target.name === 'aspectRatio') {
                 render();
             }
         });
